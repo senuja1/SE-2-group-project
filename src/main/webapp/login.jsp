@@ -1,89 +1,74 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login | Inventory System</title>
-
+    <title>Login</title>
+    <meta charset="UTF-8">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #f5f6fa;
+            background: #f4f6f8;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
         }
-
         .login-box {
-            background: #fff;
+            background: white;
             padding: 30px;
-            width: 350px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 320px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-
         h2 {
             text-align: center;
             margin-bottom: 20px;
         }
-
-        label {
-            display: block;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
         input {
             width: 100%;
             padding: 10px;
-            margin-top: 5px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
+            margin: 10px 0;
         }
-
         button {
-            margin-top: 20px;
             width: 100%;
             padding: 10px;
-            background: #273c75;
-            color: white;
+            background: #007bff;
             border: none;
-            border-radius: 5px;
+            color: white;
             font-size: 16px;
             cursor: pointer;
         }
-
         button:hover {
-            background: #192a56;
+            background: #0056b3;
         }
-
         .error {
             color: red;
             text-align: center;
-            margin-top: 10px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
-
 <body>
 
 <div class="login-box">
-    <h2>System Login</h2>
+    <h2>Login</h2>
 
-    <form action="${pageContext.request.contextPath}/login" method="post">
+    <%-- Error message from servlet --%>
+    <%
+        String error = (String) request.getAttribute("error");
+        if (error != null) {
+    %>
+    <div class="error"><%= error %></div>
+    <%
+        }
+    %>
 
-        <label for="username">Username</label>
-        <input id="username" type="text" name="username" required>
-
-        <label for="password">Password</label>
-        <input id="password" type="password" name="password" required>
-
+    <form action="login" method="post">
+        <input type="text" name="username" placeholder="Username" required />
+        <input type="password" name="password" placeholder="Password" required />
         <button type="submit">Login</button>
     </form>
-
-    <!-- Error message from servlet -->
-    <div class="error">${error}</div>
-
 </div>
 
 </body>
