@@ -70,25 +70,20 @@
 <div class="login-box">
     <h2>System Login</h2>
 
-    <form action="login" method="post">
-        <label>Username</label>
-        <input type="text" name="username" required>
+    <form action="${pageContext.request.contextPath}/login" method="post">
 
-        <label>Password</label>
-        <input type="password" name="password" required>
+        <label for="username">Username</label>
+        <input id="username" type="text" name="username" required>
+
+        <label for="password">Password</label>
+        <input id="password" type="password" name="password" required>
 
         <button type="submit">Login</button>
     </form>
 
-    <%-- Error message from servlet --%>
-    <%
-        String error = (String) request.getAttribute("error");
-        if (error != null) {
-    %>
-    <div class="error"><%= error %></div>
-    <%
-        }
-    %>
+    <!-- Error message from servlet -->
+    <div class="error">${error}</div>
+
 </div>
 
 </body>
