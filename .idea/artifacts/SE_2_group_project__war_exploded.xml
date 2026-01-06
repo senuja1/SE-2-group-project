@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="SE-2-group-project: war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/SE_2_group_project__war_exploded</output-path>
+    <root id="root" />
+  </artifact>
+</component>
