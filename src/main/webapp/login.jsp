@@ -1,74 +1,97 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login</title>
-    <meta charset="UTF-8">
+    <title>Admin Login</title>
+
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: #f4f6f8;
+            margin: 0;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
         }
-        .login-box {
-            background: white;
-            padding: 30px;
-            width: 320px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h2 {
+
+        .login-card {
+            width: 380px;
+            background: #121821;
+            border-radius: 14px;
+            padding: 40px;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.45);
             text-align: center;
-            margin-bottom: 20px;
+            color: #fff;
         }
-        input {
+
+        .login-card h2 {
+            margin-bottom: 8px;
+        }
+
+        .login-card p {
+            margin-bottom: 25px;
+            color: #9aa4b2;
+            font-size: 14px;
+        }
+
+        input[type="password"] {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
+            padding: 13px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            background: #1e2633;
+            color: #fff;
+            font-size: 15px;
+            margin-bottom: 18px;
         }
+
         button {
             width: 100%;
-            padding: 10px;
-            background: #007bff;
+            padding: 13px;
+            border-radius: 8px;
             border: none;
+            background: #ff4b4b;
             color: white;
             font-size: 16px;
             cursor: pointer;
+            transition: 0.2s;
         }
+
         button:hover {
-            background: #0056b3;
+            background: #ff2e2e;
         }
+
         .error {
-            color: red;
-            text-align: center;
-            margin-bottom: 10px;
+            margin-top: 15px;
+            color: #ff6b6b;
+            font-size: 14px;
         }
     </style>
 </head>
+
 <body>
 
-<div class="login-box">
-    <h2>Login</h2>
+<div class="login-card">
+    <h2>Admin Access</h2>
+    <p>Authorized users only</p>
 
-    <%-- Error message from servlet --%>
-    <%
-        String error = (String) request.getAttribute("error");
-        if (error != null) {
-    %>
-    <div class="error"><%= error %></div>
-    <%
-        }
-    %>
 
-    <form action="login" method="post">
-        <input type="text" name="username" placeholder="Username" required />
-        <input type="password" name="password" placeholder="Password" required />
+    <form action="<%= request.getContextPath() %>/admin/login" method="post">
+        <input
+                type="password"
+                name="password"
+                placeholder="Enter admin password"
+                required
+        />
         <button type="submit">Login</button>
     </form>
+
+    <% if (request.getParameter("error") != null) { %>
+    <div class="error"> Invalid admin password</div>
+    <% } %>
 </div>
 
 </body>

@@ -1,7 +1,7 @@
-package com.inventory.dao;
+package com.se2.groupproject.dao;
 
-import com.inventory.models.Item;
-import com.inventory.utils.DBUtil;
+import com.se2.groupproject.models.Item;
+import com.se2.groupproject.utils.DBConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,135 +9,56 @@ import java.util.List;
 
 public class ItemDAO {
 
-    // SERVER-SIDE VALIDATION
-    private void validate(Item item) throws Exception {
-        if (item.getName() == null || item.getName().isEmpty())
-            throw new Exception("Item name cannot be empty");
-        if (item.getSku() == null || item.getSku().isEmpty())
-            throw new Exception("SKU cannot be empty");
-        if (item.getQuantity() < 0)
-            throw new Exception("Quantity cannot be negative");
-        if (item.getPrice() < 0)
-            throw new Exception("Price cannot be negative");
-    }
+    public static void addItem(Item item) {
+        String sql = "INSERT INTO items (name, quantity, price) VALUES (?, ?, ?)";
 
-    public void addItem(Item item) throws Exception {
-        validate(item);
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
 
-        String sql = "INSERT INTO items(sku,name,category,quantity,price,supplier_id,reorder_level) "
-                + "VALUES(?,?,?,?,?,?,?)";
-
-        try (Connection c = DBUtil.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
-            ps.setString(1, item.getSku());
-            ps.setString(2, item.getName());
-            ps.setString(3, item.getCategory());
-            ps.setInt(4, item.getQuantity());
-            ps.setDouble(5, item.getPrice());
-            if (item.getSupplierId() != null)
-                ps.setInt(6, item.getSupplierId());
-            else
-                ps.setNull(6, Types.INTEGER);
-            ps.setInt(7, item.getReorderLevel());
-
+            ps.setString(1, item.getName());
+            ps.setInt(2, item.getQuantity());
+            ps.setDouble(3, item.getPrice());
             ps.executeUpdate();
 
-            // GET AUTO ID
-            ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) item.setItemId(rs.getInt(1));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    public Item findById(int id) throws Exception {
-        String sql = "SELECT * FROM items WHERE item_id=?";
-        try (Connection c = DBUtil.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql)) {
-
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) return mapItem(rs);
-        }
-        return null;
-    }
-
-    public List<Item> findAll() throws Exception {
+    public static List<Item> getAllItems() {
         List<Item> list = new ArrayList<>();
-        String sql = "SELECT * FROM items ORDER BY item_id DESC";
+        String sql = "SELECT * FROM items";
 
-        try (Connection c = DBUtil.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (Connection con = DBConnection.getConnection();
+             Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
 
-            while (rs.next()) list.add(mapItem(rs));
+            while (rs.next()) {
+                Item item = new Item();
+                item.setId(rs.getInt("id"));
+                item.setName(rs.getString("name"));
+                item.setQuantity(rs.getInt("quantity"));
+                item.setPrice(rs.getDouble("price"));
+                list.add(item);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return list;
     }
 
-    public void updateItem(Item item) throws Exception {
-        validate(item);
+    public static void deleteItem(int id) {
+        String sql = "DELETE FROM items WHERE id=?";
 
-        String sql = "UPDATE items SET sku=?, name=?, category=?, quantity=?, price=?, supplier_id=?, reorder_level=? "
-                + "WHERE item_id=?";
-
-        try (Connection c = DBUtil.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql)) {
-
-            ps.setString(1, item.getSku());
-            ps.setString(2, item.getName());
-            ps.setString(3, item.getCategory());
-            ps.setInt(4, item.getQuantity());
-            ps.setDouble(5, item.getPrice());
-
-            if (item.getSupplierId() != null)
-                ps.setInt(6, item.getSupplierId());
-            else
-                ps.setNull(6, Types.INTEGER);
-
-            ps.setInt(7, item.getReorderLevel());
-            ps.setInt(8, item.getItemId());
-
-            ps.executeUpdate();
-        }
-    }
-
-    public void deleteItem(int id) throws Exception {
-        String sql = "DELETE FROM items WHERE item_id=?";
-        try (Connection c = DBUtil.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql)) {
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, id);
             ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    }
-
-    public List<Item> findLowStock() throws Exception {
-        List<Item> list = new ArrayList<>();
-        String sql = "SELECT * FROM items WHERE quantity <= reorder_level";
-
-        try (Connection c = DBUtil.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) list.add(mapItem(rs));
-        }
-        return list;
-    }
-
-    private Item mapItem(ResultSet rs) throws Exception {
-        Item i = new Item();
-        i.setItemId(rs.getInt("item_id"));
-        i.setSku(rs.getString("sku"));
-        i.setName(rs.getString("name"));
-        i.setCategory(rs.getString("category"));
-        i.setQuantity(rs.getInt("quantity"));
-        i.setPrice(rs.getDouble("price"));
-
-        int supplierId = rs.getInt("supplier_id");
-        if (!rs.wasNull()) i.setSupplierId(supplierId);
-
-        i.setReorderLevel(rs.getInt("reorder_level"));
-        return i;
     }
 }

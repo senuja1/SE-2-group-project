@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" build-on-make="true" name="SE-2-group-project">
+    <output-path>$PROJECT_DIR$/out/artifacts/SE_2_group_project_war_exploded</output-path>
+    <root id="root">
+      <element id="dir-copy" path="$PROJECT_DIR$/src/main/webapp" />
+      <element id="dir-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF" />
+    </root>
+  </artifact>
+</component>
