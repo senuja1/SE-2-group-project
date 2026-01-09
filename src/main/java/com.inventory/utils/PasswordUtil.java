@@ -9,6 +9,7 @@ import org.mindrot.jbcrypt.BCrypt;
  * a "salt" to protect against rainbow table attacks.
  */
 public class PasswordUtil {
+    
 
     /**
      * Hashing Function:
