@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
+
 // @WebServlet is an Annotation that maps this class to the "/login" URL path
 @WebServlet("/login")
 public class AuthServlet extends HttpServlet {
