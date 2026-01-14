@@ -1,0 +1,205 @@
+/* ================= RESET ================= */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #0f172a;
+    color: #e5e7eb;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar {
+    width: 240px;
+    height: 100vh;
+    background: #020617;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    margin-bottom: 10px;
+}
+
+.sidebar .admin {
+    font-size: 13px;
+    color: #94a3b8;
+    margin-bottom: 30px;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    padding: 10px;
+    margin-bottom: 6px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background: #2563eb;
+}
+
+/* ================= TOPBAR ================= */
+.topbar {
+    height: 50px;
+    background: linear-gradient(90deg, #020617, #020617);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 25px;
+    position: fixed;
+    top: 0;
+    left: 240px;
+    right: 0;
+    z-index: 100;
+}
+
+.topbar button {
+    background: #ef4444;
+    border: none;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* ================= CONTENT ================= */
+.content {
+    margin-left: 260px;
+    margin-top: 70px;
+    padding: 25px;
+}
+
+/* ================= DASHBOARD STATS ================= */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat {
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+    color: white;
+}
+
+.stat h2 {
+    margin: 0;
+    font-size: 32px;
+}
+
+.stat p {
+    margin-top: 8px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.stat.red { background: #ef4444; }
+.stat.blue { background: #3b82f6; }
+.stat.green { background: #10b981; }
+.stat.orange { background: #f59e0b; }
+
+/* ================= CHART AREA ================= */
+.charts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.chart-box {
+    background: #020617;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+.chart-box h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+/* ================= TABLES ================= */
+table {
+    width: 100%;
+    background: #020617;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+th {
+    background: #020617;
+    color: #94a3b8;
+}
+
+th, td {
+    padding: 14px;
+    border-bottom: 1px solid #1e293b;
+    font-size: 14px;
+}
+
+/* ================= FORMS ================= */
+.form-card {
+    background: #020617;
+    padding: 25px;
+    border-radius: 16px;
+    max-width: 520px;
+    margin-bottom: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+.form-card h3 {
+    margin-bottom: 15px;
+}
+
+.form-card input,
+.form-card select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #1e293b;
+    font-size: 14px;
+    background: #020617;
+    color: white;
+}
+
+.form-card input:focus,
+.form-card select:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+/* ================= BUTTONS ================= */
+.btn {
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #1e40af;
+}
+
+.btn-danger {
+    background: #ef4444;
+    color: white;
+}
