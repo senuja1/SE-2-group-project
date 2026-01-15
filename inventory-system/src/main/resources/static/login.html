@@ -1,27 +1,47 @@
-!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Login</title>
-    <link rel="stylesheet" href="/css/login.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Login | Inventory Management System</title>
+    
+    <link 
+        rel="stylesheet" 
+        href="/css/login.css">
 </head>
 
 <body class="login-body">
 
-<div class="login-wrapper">
-    <div class="login-card">
-        <h1>Inventory Management System</h1>
+    <div class="login-wrapper">
+    
+        <div class="login-card">
+        
+            <h1>Inventory Management System</h1>
 
-        <input id="username" placeholder="Username">
-        <input id="password" type="password" placeholder="Password">
+            <input 
+                id="username" 
+                type="text" 
+                placeholder="Username"
+                aria-label="Username field">
 
-        <button onclick="login()">Login</button>
+            <input 
+                id="password" 
+                type="password" 
+                placeholder="Password"
+                aria-label="Password field">
 
-        <div class="login-footer">
-            © 2026 Inventory System
-        </div>
-    </div>
-</div>
+            <button 
+                type="button" 
+                onclick="login()">
+                Login
+            </button>
 
-<script src="/js/auth.js"></script>
+            <div class="login-footer">
+                &copy; 2026 Inventory System. All Rights Reserved.
+            </div>
+            
+        </div> </div> <script src="/js/auth.js"></script>
+    
 </body>
 </html>
