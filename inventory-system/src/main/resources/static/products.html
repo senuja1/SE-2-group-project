@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Products</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body onload="checkAuth(); loadProducts();">
+
+
+<div class="sidebar">
+    <h2>Inventory</h2>
+
+    <a href="/dashboard.html">Dashboard</a>
+    <a class="active" href="/products.html">Products</a>
+    <a href="/add-product.html">Add Product</a>
+    <a onclick="logout()">Logout</a>
+</div>
+
+
+<div class="topbar">
+    <span>Products</span>
+    <button onclick="logout()">Logout</button>
+</div>
+
+
+<div class="content">
+    <h1>Products</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Brand</th>
+            <th>Qty</th>
+            <th>Price (USD)</th>
+        </tr>
+        </thead>
+
+        <tbody id="productTable">
+
+        </tbody>
+    </table>
+</div>
+
+<script src="/js/auth.js"></script>
+
+<script>
+    function loadProducts() {
+        fetch("/api/products")
+            .then(r => r.json())
+            .then(data => {
+
+                let rows = "";
+
+                if (data.length === 0) {
+                    rows = `
+                    <tr>
+                        <td colspan="6" style="text-align:center;opacity:0.6">
+                            No products added yet
+                        </td>
+                    </tr>
+                `;
+                }
+
+                data.forEach(p => {
+                    rows += `
+                    <tr>
+                        <td>${p.id}</td>
+                        <td>${p.name}</td>
+                        <td>${p.category ?? "-"}</td>
+                        <td>${p.brand ? p.brand.name : "-"}</td>
+                        <td>${p.quantity}</td>
+                        <td>$${p.price}</td>
+                    </tr>
+                `;
+                });
+
+                document.getElementById("productTable").innerHTML = rows;
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Failed to load products");
+            });
+    }
+</script>
+
+</body>
+</html>
