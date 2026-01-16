@@ -7,7 +7,6 @@
 
 <body onload="checkAuth(); loadCategories();">
 
-
 <div class="sidebar">
     <h2>Inventory Management</h2>
     <div class="admin">Welcome, admin</div>
@@ -20,22 +19,18 @@
     <a onclick="logout()">Logout</a>
 </div>
 
-
 <div class="topbar">
     <span>Categories</span>
     <button onclick="logout()">Logout</button>
 </div>
 
-
 <div class="content">
     <h1>Categories</h1>
-
 
     <div class="form-card">
         <input type="text" id="categoryName" placeholder="Category Name">
         <button class="btn btn-primary" onclick="addCategory()">Add Category</button>
     </div>
-
 
     <table>
         <thead>
@@ -46,14 +41,11 @@
         </tr>
         </thead>
         <tbody id="categoryTable">
-
         </tbody>
     </table>
 </div>
 
-
 <script src="/js/auth.js"></script>
-
 
 <script>
     function loadCategories() {
@@ -104,7 +96,7 @@
         const name = document.getElementById("categoryName").value.trim();
 
         if (!name) {
-            alert("Category name required ");
+            alert("Category name required");
             return;
         }
 
@@ -115,17 +107,17 @@
         })
             .then(() => {
                 document.getElementById("categoryName").value = "";
-                loadCategories(); //
+                loadCategories();
             });
     }
 
     function deleteCategory(id) {
-        if (!confirm("Delete this category? ")) return;
+        if (!confirm("Delete this category?")) return;
 
-        fetch(/api/categories/${id}, {
+        fetch(`/api/categories/${id}`, {
             method: "DELETE"
         })
-    .then(() => loadCategories());
+            .then(() => loadCategories());
     }
 </script>
 
